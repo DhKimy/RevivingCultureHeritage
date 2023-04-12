@@ -36,6 +36,7 @@ struct ContentView: View {
     @State var activeIndex: Int = 0
     
     var body: some View {
+        
         ZStack {
             ForEach(store.items) { item in
                 
@@ -70,7 +71,15 @@ struct ContentView: View {
             }
         }
         .gesture(getDragGesture())
-    }
+        .background(
+            Image("background")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        )
+                    
+}
+    
     
     private func getDragGesture() -> some Gesture {
         
