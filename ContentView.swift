@@ -45,8 +45,14 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 18)
                         .fill(item.color)
                         .shadow(radius: 10, y: 30)
+                        
                     Image(item.title)
                         .resizable()
+                        .overlay(
+                            Button("b", action: {
+                          print("hello")
+                        })
+                        )
                     Text(item.title)
                         .fontWeight(.bold)
                         .font(.system(size: 72, weight: .heavy, design: .serif))
@@ -76,6 +82,7 @@ struct ContentView: View {
                 .resizable()
                 .edgesIgnoringSafeArea(.all)
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                .opacity(0.3)
         )
                     
 }
