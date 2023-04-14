@@ -34,6 +34,9 @@ struct ContentView: View {
     @State private var snappedItem = 0.0
     @State private var draggingItem = 0.0
     @State var activeIndex: Int = 0
+    @GestureState private var isDetectingPress = false
+    @State var openViewName : String = ""
+    @State var isNavigationActive = false
     
     var body: some View {
         
@@ -45,14 +48,19 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 18)
                         .fill(item.color)
                         .shadow(radius: 10, y: 30)
-                        
                     Image(item.title)
                         .resizable()
-                        .overlay(
-                            Button("b", action: {
-                          print("hello")
-                        })
-                        )
+                        .scaleEffect(isDetectingPress ? 1.5 : 1)
+                        .animation(Animation.easeInOut(duration: 1.0))
+                        .gesture(LongPressGesture(minimumDuration: 0.5).sequenced(before:DragGesture(minimumDistance: 0))
+                            .updating($isDetectingPress) { value, state, _ in
+                                switch value {
+                                case .second(true, nil):
+                                    state = true
+                                default:
+                                    break
+                                }
+                            })
                     Text(item.title)
                         .fontWeight(.bold)
                         .font(.system(size: 72, weight: .heavy, design: .serif))
@@ -66,16 +74,20 @@ struct ContentView: View {
                 .offset(x: myXOffset(item.id), y: 0)
                 .zIndex(1.0 - abs(distance(item.id)) * 0.1)
                 
-                .onTapGesture {
-                    
-                    // withAnimation is necessary
-                    withAnimation {
-                        
-                        draggingItem = Double(item.id)
-                    }
-                }
+//                .onTapGesture {
+//
+//                    // withAnimation is necessary
+//                    withAnimation {
+//                        draggingItem = Double(item.id)
+//                    }
+//                }
             }
         }
+//        .gesture(
+//            TapGesture()
+//                .onEnded { _ in
+//                    print("Image was tapped")
+//                })
         .gesture(getDragGesture())
         .background(
             Image("background")
@@ -84,9 +96,9 @@ struct ContentView: View {
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 .opacity(0.3)
         )
-                    
-}
-    
+        NavigationLink(destination: DetailView(), isActive: $isNavigationActive) {
+        }
+    }
     
     private func getDragGesture() -> some Gesture {
         
