@@ -1,32 +1,6 @@
 import SwiftUI
 
-struct Heritage: Identifiable {
-    var id: Int
-    var title: String
-    let author: String
-    let image: String // Image 변경 필요
-    let backgroundSound: String
-    let effectSound: String
-    let fragment: String // Image 변경 필요
-    let color: Color
-}
 
-class Store: ObservableObject {
-    @Published var items: [Heritage]
-
-    // data
-    init() {
-        items = [
-            Heritage(id: 0, title: "Ssileum", author: "HongdoKim", image: "Ssileum", backgroundSound: "SsileumBGM", effectSound: "SsileumSFX", fragment: "SsileumFrag", color: Color.white),
-            Heritage(id: 1, title: "Yuchnoli", author: "HongdoKim", image: "2", backgroundSound: "YuchnoliBGM", effectSound: "YuchnoliSFX", fragment: "YuchnoliFrag", color: Color.white),
-            Heritage(id: 2, title: "Jegichagi", author: "JunkeunKim", image: "3", backgroundSound: "JegichagiBGM", effectSound: "JegichagiSFX", fragment: "JegichagiFrag", color: Color.white),
-            Heritage(id: 3, title: "Sulyeobdo", author: "unknown", image: "4", backgroundSound: "SulyeobdoBGM", effectSound: "SulyeobdoSFX", fragment: "SulyeobdodoFrag", color: Color.white),
-            Heritage(id: 4, title: "Dano", author: "YoonbokSin", image: "5", backgroundSound: "DanoBGM", effectSound: "DanoSFX", fragment: "DanoFrag", color: Color.white),
-            Heritage(id: 5, title: "Tuho", author: "YoonbokSin", image: "6", backgroundSound: "TuhoBGM", effectSound: "TuhoSFX", fragment: "TuhoFrag", color: Color.white),
-            Heritage(id: 6, title: "Baenoli", author: "YoonbokSin", image: "7", backgroundSound: "BaenoliBGM", effectSound: "BaenoliSFX", fragment: "BaenoliFrag", color: Color.white)
-        ]
-    }
-}
 
 struct ContentView: View {
     
@@ -45,17 +19,17 @@ struct ContentView: View {
                     ZStack {
                         Image(item.title)
                             .resizable()
-//                            .scaleEffect(isDetectingPress ? 1.5 : 1)
-//                            .animation(Animation.easeInOut(duration: 1.0))
-//                            .gesture(LongPressGesture(minimumDuration: 0.5).sequenced(before:DragGesture(minimumDistance: 0))
-//                                .updating($isDetectingPress) { value, state, _ in
-//                                    switch value {
-//                                    case .second(true, nil):
-//                                        state = true
-//                                    default:
-//                                        break
-//                                    }
-//                                })
+                        //                            .scaleEffect(isDetectingPress ? 1.5 : 1)
+                        //                            .animation(Animation.easeInOut(duration: 1.0))
+                        //                            .gesture(LongPressGesture(minimumDuration: 0.5).sequenced(before:DragGesture(minimumDistance: 0))
+                        //                                .updating($isDetectingPress) { value, state, _ in
+                        //                                    switch value {
+                        //                                    case .second(true, nil):
+                        //                                        state = true
+                        //                                    default:
+                        //                                        break
+                        //                                    }
+                        //                                })
                             .shadow(radius: 10, y: 30)
                             .gesture(getTapGesture(item.title))
                         Text(item.title)
@@ -64,24 +38,24 @@ struct ContentView: View {
                             .padding()
                             .foregroundColor(item.color)
                         
-//                        Button(action: {
-//                            self.isNavigationActive = true
-//                            openViewName = item.title
-//
-//                        }) {
-//                            ZStack {
-//                                Image(item.title)
-//                                    .resizable()
-//                                Text(item.title)
-//                                    .fontWeight(.bold)
-//                                    .font(.system(size: 72, weight: .heavy, design: .serif))
-//                                    .padding()
-//                                    .foregroundColor(item.color)
-//
-//                            }
+                        //                        Button(action: {
+                        //                            self.isNavigationActive = true
+                        //                            openViewName = item.title
+                        //
+                        //                        }) {
+                        //                            ZStack {
+                        //                                Image(item.title)
+                        //                                    .resizable()
+                        //                                Text(item.title)
+                        //                                    .fontWeight(.bold)
+                        //                                    .font(.system(size: 72, weight: .heavy, design: .serif))
+                        //                                    .padding()
+                        //                                    .foregroundColor(item.color)
+                        //
+                        //                            }
                     }
-//                        .gesture(getDragGesture())
-//
+                    //                        .gesture(getDragGesture())
+                    //
                     .frame(width: UIScreen.main.bounds.size.width / 1.9, height: UIScreen.main.bounds.size.height / 1.7)
                     
                     .scaleEffect(1.0 - abs(distance(item.id)) * 0.4 )
@@ -97,11 +71,13 @@ struct ContentView: View {
                     //                    }
                     //                }
                 }
+                .tint(Color.black)
                 NavigationLink(destination: DetailView(title: openViewName), isActive: $isNavigationActive) {
                     
                 }
                 
-                    
+                
+                
             }
             
             
@@ -119,7 +95,7 @@ struct ContentView: View {
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .opacity(0.3)
             )
-           
+            
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
