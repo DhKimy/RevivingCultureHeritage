@@ -39,65 +39,107 @@ struct ContentView: View {
     @State var isNavigationActive = false
     
     var body: some View {
-        
-        ZStack {
-            ForEach(store.items) { item in
-                
-                // article view
-                ZStack {
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(item.color)
-                        .shadow(radius: 10, y: 30)
-                    Image(item.title)
-                        .resizable()
-                        .scaleEffect(isDetectingPress ? 1.5 : 1)
-                        .animation(Animation.easeInOut(duration: 1.0))
-                        .gesture(LongPressGesture(minimumDuration: 0.5).sequenced(before:DragGesture(minimumDistance: 0))
-                            .updating($isDetectingPress) { value, state, _ in
-                                switch value {
-                                case .second(true, nil):
-                                    state = true
-                                default:
-                                    break
-                                }
-                            })
-                    Text(item.title)
-                        .fontWeight(.bold)
-                        .font(.system(size: 72, weight: .heavy, design: .serif))
-                        .padding()
-                        .foregroundColor(item.color)
-                }
-                .frame(width: UIScreen.main.bounds.size.width / 1.9, height: UIScreen.main.bounds.size.height / 1.7)
-                
-                .scaleEffect(1.0 - abs(distance(item.id)) * 0.4 )
-                .opacity(1.0 - abs(distance(item.id)) * 0.5 )
-                .offset(x: myXOffset(item.id), y: 0)
-                .zIndex(1.0 - abs(distance(item.id)) * 0.1)
-                
-//                .onTapGesture {
+        NavigationView {
+            ZStack {
+                ForEach(store.items) { item in
+                    ZStack {
+                        Image(item.title)
+                            .resizable()
+//                            .scaleEffect(isDetectingPress ? 1.5 : 1)
+//                            .animation(Animation.easeInOut(duration: 1.0))
+//                            .gesture(LongPressGesture(minimumDuration: 0.5).sequenced(before:DragGesture(minimumDistance: 0))
+//                                .updating($isDetectingPress) { value, state, _ in
+//                                    switch value {
+//                                    case .second(true, nil):
+//                                        state = true
+//                                    default:
+//                                        break
+//                                    }
+//                                })
+                            .shadow(radius: 10, y: 30)
+                            .gesture(getTapGesture(item.title))
+                        Text(item.title)
+                            .fontWeight(.bold)
+                            .font(.system(size: 72, weight: .heavy, design: .serif))
+                            .padding()
+                            .foregroundColor(item.color)
+                        
+//                        Button(action: {
+//                            self.isNavigationActive = true
+//                            openViewName = item.title
 //
-//                    // withAnimation is necessary
-//                    withAnimation {
-//                        draggingItem = Double(item.id)
-//                    }
-//                }
+//                        }) {
+//                            ZStack {
+//                                Image(item.title)
+//                                    .resizable()
+//                                Text(item.title)
+//                                    .fontWeight(.bold)
+//                                    .font(.system(size: 72, weight: .heavy, design: .serif))
+//                                    .padding()
+//                                    .foregroundColor(item.color)
+//
+//                            }
+                    }
+//                        .gesture(getDragGesture())
+//
+                    .frame(width: UIScreen.main.bounds.size.width / 1.9, height: UIScreen.main.bounds.size.height / 1.7)
+                    
+                    .scaleEffect(1.0 - abs(distance(item.id)) * 0.4 )
+                    .opacity(1.0 - abs(distance(item.id)) * 0.5 )
+                    .offset(x: myXOffset(item.id), y: 0)
+                    .zIndex(1.0 - abs(distance(item.id)) * 0.1)
+                    
+                    //                .onTapGesture {
+                    //
+                    //                    // withAnimation is necessary
+                    //                    withAnimation {
+                    //                        draggingItem = Double(item.id)
+                    //                    }
+                    //                }
+                }
+                NavigationLink(destination: DetailView(title: openViewName), isActive: $isNavigationActive) {
+                    
+                }
+                
+                    
             }
+            
+            
+            //        .gesture(
+            //            TapGesture()
+            //                .onEnded { _ in
+            //                    print("Image was tapped")
+            //                })
+            
+            .gesture(getDragGesture())
+            .background(
+                Image("background")
+                    .resizable()
+                    .edgesIgnoringSafeArea(.all)
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .opacity(0.3)
+            )
+           
         }
-//        .gesture(
-//            TapGesture()
-//                .onEnded { _ in
-//                    print("Image was tapped")
-//                })
-        .gesture(getDragGesture())
-        .background(
-            Image("background")
-                .resizable()
-                .edgesIgnoringSafeArea(.all)
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                .opacity(0.3)
-        )
-        NavigationLink(destination: DetailView(), isActive: $isNavigationActive) {
-        }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
+    
+    @State private var tapped = false
+    
+    var tap: some Gesture {
+        TapGesture(count: 1)
+            .onEnded{ _ in
+                
+            }
+    }
+    
+    private func getTapGesture(_ title: String) -> some Gesture {
+        TapGesture(count: 1)
+            .onEnded { value in
+                print(tapped)
+                self.isNavigationActive = true
+                openViewName = title
+            }
     }
     
     private func getDragGesture() -> some Gesture {
@@ -137,4 +179,3 @@ struct ContentView_Previews: PreviewProvider {
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }
-
