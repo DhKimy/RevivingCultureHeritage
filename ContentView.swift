@@ -57,7 +57,7 @@ struct ContentView: View {
     }
     
     private func changeDetailBack() {
-        backgroundName = detailViewBackgroundScreen[Int.random(in: 0 ..< 5)]
+        backgroundName = detailViewBackgroundScreen[Int.random(in: 0 ..< 4)]
     }
     
     private func getTapGesture(_ title: String) -> some Gesture {
