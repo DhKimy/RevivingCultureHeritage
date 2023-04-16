@@ -1,6 +1,5 @@
 import SwiftUI
-
-
+import AVFoundation
 
 struct ContentView: View {
     
@@ -37,7 +36,7 @@ struct ContentView: View {
                     .zIndex(1.0 - abs(distance(item.id)) * 0.1)
                 }
                 
-                NavigationLink(destination: DetailView(title: openViewName, backgroundName: backgroundName), isActive: $isNavigationActive) {
+                NavigationLink(destination: DetailView(openViewName: openViewName, backgroundName: backgroundName), isActive: $isNavigationActive) {
                     
                 }
             }

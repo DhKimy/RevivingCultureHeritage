@@ -8,10 +8,7 @@
 import SwiftUI
 import Foundation
 
-
-
-
-struct DetailView: View {
+struct HwalssogiView: View {
     @State var title = ""
     @State var backgroundName = ""
     @State private var isShowingDetail = false
@@ -81,40 +78,9 @@ struct DetailView: View {
     }
 }
 
-struct ModalView: View {
-    @Binding var isFirstTouch: Bool
-    @Environment(\.presentationMode) private var presentationMode
-    
-    var body: some View {
-        VStack {
-            Text("Detail View")
-                .padding()
-            Button("Dismiss") {
-                withAnimation {
-                    isFirstTouch = false // isFirstTouch 변수를 false로 변경
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
-            .frame(width: 200, height: 50)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
-        .cornerRadius(16)
-        .padding()
-        .shadow(radius: 8)
-        .opacity(0.6)
-        .onDisappear {
-            isFirstTouch = false
-        }
-    }
-}
-
-struct DetailView_Previews: PreviewProvider {
+struct HwalssogiView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView()
+        HwalssogiView()
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }

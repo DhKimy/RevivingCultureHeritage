@@ -11,6 +11,28 @@ import SwiftUI
 let detailViewBackgroundScreen: [String] = ["DetailViewBack_BlueW",  "DetailViewBack_OrangeW", "DetailViewBack_RedW", "DetailViewBack_WhiteB"]
 
 
+struct DetailView: View {
+    let openViewName: String
+    let backgroundName: String
+    
+    @ViewBuilder var body: some View {
+        switch openViewName {
+        case "Dano":
+            DanoView(title: openViewName, backgroundName: backgroundName)
+        case "Hwalssogi":
+            HwalssogiView(title: openViewName, backgroundName: backgroundName)
+        case "Jekinori":
+            JekinoriView(title: openViewName, backgroundName: backgroundName)
+        case "Ssireum":
+            SsireumView(title: openViewName, backgroundName: backgroundName)
+        default:
+            TuhoView(title: openViewName, backgroundName: backgroundName)
+        
+        }
+    }
+}
+
+
 struct Heritage: Identifiable {
     var id: Int
     var title: String
