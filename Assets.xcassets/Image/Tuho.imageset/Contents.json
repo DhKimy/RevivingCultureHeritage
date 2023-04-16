@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "YoonbokSin_ImhaTuho.jpeg",
-      "idiom" : "universal"
+      "filename" : "YoonbokSin_ImhaTuho (1).jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

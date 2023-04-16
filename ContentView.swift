@@ -12,11 +12,13 @@ struct ContentView: View {
     @State var openViewName : String = ""
     @State var isNavigationActive = false
     @State private var tapped = false
+    @State var backgroundName = detailViewBackgroundScreen[Int.random(in: 0 ..< 4)]
     
     var body: some View {
         NavigationView {
             ZStack {
                 ForEach(store.items) { item in
+                    
                     ZStack {
                         Image(item.title)
                             .resizable()
@@ -29,13 +31,14 @@ struct ContentView: View {
                             .foregroundColor(item.color)
                     }
                     .frame(width: UIScreen.main.bounds.size.width / 1.9, height: UIScreen.main.bounds.size.height / 1.7)
-                    
                     .scaleEffect(1.0 - abs(distance(item.id)) * 0.4 )
                     .opacity(1.0 - abs(distance(item.id)) * 0.5 )
                     .offset(x: myXOffset(item.id), y: 0)
                     .zIndex(1.0 - abs(distance(item.id)) * 0.1)
                 }
-                NavigationLink(destination: DetailView(title: openViewName), isActive: $isNavigationActive) {
+                
+                NavigationLink(destination: DetailView(title: openViewName, backgroundName: backgroundName), isActive: $isNavigationActive) {
+                    
                 }
             }
             .gesture(getDragGesture())
@@ -49,6 +52,12 @@ struct ContentView: View {
             
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        
+        .accentColor(backgroundName.last == "B" ? .black : .white)
+    }
+    
+    private func changeDetailBack() {
+        backgroundName = detailViewBackgroundScreen[Int.random(in: 0 ..< 5)]
     }
     
     private func getTapGesture(_ title: String) -> some Gesture {
@@ -57,12 +66,14 @@ struct ContentView: View {
                 self.isNavigationActive = true
                 openViewName = title
             }
+        
     }
     
     private func getDragGesture() -> some Gesture {
         DragGesture()
             .onChanged { value in
                 draggingItem = snappedItem + value.translation.width / 100
+                changeDetailBack()
             }
             .onEnded { value in
                 withAnimation {
@@ -80,6 +91,7 @@ struct ContentView: View {
     }
     
     func distance(_ item: Int) -> Double {
+     
         return (draggingItem - Double(item)).remainder(dividingBy: Double(store.items.count))
     }
     

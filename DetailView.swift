@@ -8,16 +8,18 @@
 import SwiftUI
 import Foundation
 
-let detailViewBackgroundScreen: [String] = ["DetailViewBack_BlueW", "DetailViewBack_GreenW", "DetailViewBack_OrangeW", "DetailViewBack_RedW", "DetailViewBack_WhiteB"]
+
+
 
 struct DetailView: View {
     @State var title = ""
+    @State var backgroundName = ""
     @State private var isShowingDetail = false
     @State private var bouncing = false
     @State var isFirstTouch = false
-    var backgroundName = detailViewBackgroundScreen[Int.random(in: 0 ..< 4)]
-    
+   
     var body: some View {
+        
         ZStack {
             Image(title)
                 .resizable()
@@ -47,7 +49,6 @@ struct DetailView: View {
         }
         .frame(width: UIScreen.main.bounds.size.width / 1.25, height: UIScreen.main.bounds.size.height / 1.25)
         .background(
-            
             Image(backgroundName)
                 .resizable()
                 .edgesIgnoringSafeArea(.all)
@@ -58,7 +59,7 @@ struct DetailView: View {
             ModalView(isFirstTouch: $isFirstTouch)
         }
         .gesture(getTapGesture())
-        
+         
     }
     
     

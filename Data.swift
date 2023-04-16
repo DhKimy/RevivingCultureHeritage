@@ -6,6 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
+
+let detailViewBackgroundScreen: [String] = ["DetailViewBack_BlueW", "DetailViewBack_GreenW", "DetailViewBack_OrangeW", "DetailViewBack_RedW", "DetailViewBack_WhiteB"]
+
 
 struct Heritage: Identifiable {
     var id: Int
